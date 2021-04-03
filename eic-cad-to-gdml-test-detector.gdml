@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <variable name="i" value="0"/>
+  <variable name="j" value="0"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <!-- world -->
+  <box name="solid_world" x="2000" y="2000" z="2000"/>
+  
+  <!-- barrel tracker -->
+  <loop for="i" from="10" to="100" step="10">
+    <tube name="solid_barrel_tracker[i]" rmin="i" rmax="i+1" z="2*i" deltaphi="360" startphi="0" aunit="deg"/>
+  </loop>
+
+  <!-- endcap tracker -->
+  <loop for="i" from="20" to="100" step="10">
+    <tube name="solid_endcap_tracker[i]" rmin="0" rmax="i" z="1" deltaphi="360" startphi="0" aunit="deg"/>
+  </loop>
+  
+  <!-- tpc barrel -->
+  <polycone name="solid_tpc_barrel" startphi="0" deltaphi="360" aunit="deg">
+    <zplane rmin="150" rmax="150" z="-300"/>
+    <zplane rmin="55" rmax="150" z="-110"/>
+    <zplane rmin="55" rmax="150" z="+110"/>
+    <zplane rmin="150" rmax="150" z="+300"/>
+  </polycone>
+  
+  <!-- cal block -->
+  <box name="solid_cal_block" x="25" y="25" z="250"/>
+</solids>
+
+<structure>
+  <!-- barrel tracker -->
+  <loop for="i" from="10" to="100" step="10">
+    <volume name="volume_barrel_tracker[i]">
+      <materialref ref="G4_Si"/>
+      <solidref ref="solid_barrel_tracker[i]"/>
+    </volume>
+  </loop>
+
+  <!-- endcap tracker -->
+  <loop for="i" from="20" to="100" step="10">
+    <volume name="volume_endcap_tracker[i]">
+      <materialref ref="G4_Si"/>
+      <solidref ref="solid_endcap_tracker[i]"/>
+    </volume>
+  </loop>
+  
+  <!-- tpc barrel -->
+  <volume name="volume_tpc_barrel">
+    <materialref ref="G4_METHANE"/>
+    <solidref ref="solid_tpc_barrel"/>
+  </volume>
+  
+  <!-- cal block -->
+  <volume name="volume_cal_block">
+    <materialref ref="G4_GLASS_LEAD"/>
+    <solidref ref="solid_cal_block"/>  
+  </volume>
+
+  <!-- world -->
+  <volume name="volume_world">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="solid_world"/>
+    
+    <!-- barrel tracker -->
+    <loop for="i" from="10" to="100" step="10">
+      <physvol name="physvol_barrel_tracker[i]">
+        <volumeref ref="volume_barrel_tracker[i]"/>
+      </physvol>
+    </loop>
+
+    <!-- endcap tracker - forward -->
+    <loop for="i" from="20" to="100" step="10">
+      <physvol name="physvol_endcap_tracker_forward[i]">
+        <volumeref ref="volume_endcap_tracker[i]"/>
+        <position z="i+0.5"/> <!-- half thickness -->
+        <rotation z="0" unit="deg"/>
+      </physvol>
+    </loop>
+    
+    <!-- endcap tracker - backward -->
+    <loop for="i" from="20" to="100" step="10">
+      <physvol name="physvol_endcap_tracker_backward[i]">
+        <volumeref ref="volume_endcap_tracker[i]"/>
+        <position z="-i-0.5"/> <!-- half thickness -->
+        <rotation z="180" unit="deg"/>
+      </physvol>
+    </loop>
+    
+    <!-- tpc barrel -->
+    <physvol name="physvol_tpc_barrel">
+      <volumeref ref="volume_tpc_barrel"/>
+    </physvol>
+    
+    <!-- cal endcap - forward -->
+    <loop for="i" from="-250" to="250-1" step="25">
+      <loop for="j" from="-250" to="250-1" step="25">
+        <physvol name="physvol_cal_block_forward[i][j]">
+          <volumeref ref="volume_cal_block"/>
+          <position x="i+12.5" y="j+12.5" z="500+125"/>
+          <rotation z="0" unit="deg"/>
+        </physvol>
+      </loop>
+    </loop>
+    
+    <!-- cal endcap - backward -->
+    <loop for="i" from="-250" to="250-1" step="25">
+      <loop for="j" from="-250" to="250-1" step="25">
+        <physvol name="physvol_cal_block_backward[i][j]">
+          <volumeref ref="volume_cal_block"/>
+          <position x="i+12.5" y="j+12.5" z="-500-125"/>
+          <rotation z="180" unit="deg"/>
+        </physvol>
+      </loop>
+    </loop>
+
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="volume_world"/>
+</setup>
+
+</gdml>
