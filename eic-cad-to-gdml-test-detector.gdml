@@ -81,8 +81,8 @@
     <loop for="i" from="20" to="100" step="10">
       <physvol name="physvol_endcap_tracker_forward[i]">
         <volumeref ref="volume_endcap_tracker[i]"/>
-        <position z="i+0.5"/> <!-- half thickness -->
-        <rotation z="0" unit="deg"/>
+        <position name="pos_endcap_tracker_forward[i]" z="i+0.5"/> <!-- half thickness -->
+        <rotation name="rot_endcap_tracker_forward[i]" z="0" unit="deg"/>
       </physvol>
     </loop>
     
@@ -90,8 +90,8 @@
     <loop for="i" from="20" to="100" step="10">
       <physvol name="physvol_endcap_tracker_backward[i]">
         <volumeref ref="volume_endcap_tracker[i]"/>
-        <position z="-i-0.5"/> <!-- half thickness -->
-        <rotation z="180" unit="deg"/>
+        <position name="pos_endcap_tracker_backward[i]" z="-i-0.5"/> <!-- half thickness -->
+        <rotation name="rot_endcap_tracker_backward[i]" z="180" unit="deg"/>
       </physvol>
     </loop>
     
@@ -105,8 +105,8 @@
       <loop for="j" from="-250" to="250-1" step="25">
         <physvol name="physvol_cal_block_forward[i][j]">
           <volumeref ref="volume_cal_block"/>
-          <position x="i+12.5" y="j+12.5" z="500+125"/>
-          <rotation z="0" unit="deg"/>
+          <position name="pos_cal_block_forward[i][j]" x="i+12.5" y="j+12.5" z="500+125"/>
+          <rotation name="rot_cal_block_forward[i][j]" z="0" unit="deg"/>
         </physvol>
       </loop>
     </loop>
@@ -116,8 +116,8 @@
       <loop for="j" from="-250" to="250-1" step="25">
         <physvol name="physvol_cal_block_backward[i][j]">
           <volumeref ref="volume_cal_block"/>
-          <position x="i+12.5" y="j+12.5" z="-500-125"/>
-          <rotation z="180" unit="deg"/>
+          <position name="pos_cal_block_backward[i][j]" x="i+12.5" y="j+12.5" z="-500-125"/>
+          <rotation name="rot_cal_block_backward[i][j]" z="180" unit="deg"/>
         </physvol>
       </loop>
     </loop>
