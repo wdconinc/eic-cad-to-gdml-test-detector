@@ -16,12 +16,12 @@
   
   <!-- barrel tracker -->
   <loop for="i" from="10" to="100" step="10">
-    <tube name="solid_barrel_tracker[i]" rmin="i" rmax="i+1" z="2*i" deltaphi="360" startphi="0" aunit="deg"/>
+    <tube name="solid_barrel_tracker[i]" rmin="i/2" rmax="i/2+1" z="2*i" deltaphi="360" startphi="0" aunit="deg"/>
   </loop>
 
   <!-- endcap tracker -->
   <loop for="i" from="20" to="100" step="10">
-    <tube name="solid_endcap_tracker[i]" rmin="0" rmax="i" z="1" deltaphi="360" startphi="0" aunit="deg"/>
+    <tube name="solid_endcap_tracker[i]" rmin="0" rmax="i/2" z="1" deltaphi="360" startphi="0" aunit="deg"/>
   </loop>
   
   <!-- tpc barrel -->
