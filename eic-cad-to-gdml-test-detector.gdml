@@ -55,7 +55,7 @@
   
   <!-- tpc barrel -->
   <volume name="volume_tpc_barrel">
-    <materialref ref="G4_METHANE"/>
+    <materialref ref="G4_Ar"/>
     <solidref ref="solid_tpc_barrel"/>
   </volume>
   
